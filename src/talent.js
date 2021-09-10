@@ -86,8 +86,11 @@ class Talent {
         return new Array(130)
             .fill(1).map((v, i)=>{
                 if(!i && include) return include;
-                let grade = randomGrade();
+                const gradeRandom = Math.random();
+                let grade = 3;
+
                 while(talentList[grade].length == 0) grade--;
+
                 const length = talentList[grade].length;
 
                 const random = Math.floor(Math.random()*length) % length;
