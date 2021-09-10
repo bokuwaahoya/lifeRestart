@@ -48,29 +48,7 @@ class Talent {
         return null;
     }
 
-    talentRandom(include, {times = 0, achievement = 0} = {}) {
-        const rate = { 1:100, 2:10, 3:1, };
-        const rateAddition = { 1:1, 2:1, 3:1, };
-        const timesRate = getRate('times', times);
-        const achievementRate = getRate('achievement', achievement);
-
-        for(const grade in timesRate)
-            rateAddition[grade] += timesRate[grade] - 1;
-
-        for(const grade in achievementRate)
-            rateAddition[grade] += achievementRate[grade] - 1;
-
-        for(const grade in rateAddition)
-            rate[grade] *= rateAddition[grade];
-
-        const randomGrade = () => {
-            let randomNumber = Math.floor(Math.random() * 1000);
-            if((randomNumber -= rate[3]) < 0) return 3;
-            if((randomNumber -= rate[2]) < 0) return 2;
-            if((randomNumber -= rate[1]) < 0) return 1;
-            return 0;
-        }
-
+    talentRandom(include) {
         // 1000, 100, 10, 1
         const talentList = {};
         for(const talentId in this.#talents) {
