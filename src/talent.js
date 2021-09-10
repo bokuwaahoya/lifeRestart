@@ -72,7 +72,6 @@ class Talent {
         }
 
         // 1000, 100, 10, 1
-    talentRandom(include) {
         const talentList = {};
         for(const talentId in this.#talents) {
             const { id, grade, name, description } = this.#talents[talentId];
@@ -87,11 +86,8 @@ class Talent {
         return new Array(130)
             .fill(1).map((v, i)=>{
                 if(!i && include) return include;
-                const gradeRandom = Math.random();
-                let grade = 3;
-
+                let grade = randomGrade();
                 while(talentList[grade].length == 0) grade--;
-
                 const length = talentList[grade].length;
 
                 const random = Math.floor(Math.random()*length) % length;
