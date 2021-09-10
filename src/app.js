@@ -160,11 +160,11 @@ class App{
                                 li.removeClass('selected')
                                 this.#talentSelected.delete(talent);
                                 if(this.#talentSelected.size<3) {
-                                    talentPage.find('#next').text('请选择3个')
+                                    talentPage.find('#next').text('至少选择3个')
                                 }
                             } else {
-                                if(this.#talentSelected.size==3) {
-                                    this.hint('只能选3个天赋');
+                                if(this.#talentSelected.size>30) {
+                                    this.hint('只能选30个天赋');
                                     return;
                                 }
 
@@ -183,7 +183,7 @@ class App{
                                 }
                                 li.addClass('selected');
                                 this.#talentSelected.add(talent);
-                                if(this.#talentSelected.size==3) {
+                                if(this.#talentSelected.size>3) {
                                     talentPage.find('#next').text('开始新人生')
                                 }
                             }
@@ -195,12 +195,12 @@ class App{
         talentPage
             .find('#next')
             .click(()=>{
-                if(this.#talentSelected.size!=3) {
-                    this.hint('请选择3个天赋');
+                if(this.#talentSelected.size>30) {
+                    this.hint('请选择至多30个天赋');
                     return;
                 }
                 talentPage.find('#next').hide()
-                this.#totalMax = 20 + this.#life.getTalentAllocationAddition(Array.from(this.#talentSelected).map(({id})=>id));
+                this.#totalMax = 40 + this.#life.getTalentAllocationAddition(Array.from(this.#talentSelected).map(({id})=>id));
                 this.switch('property');
             })
 
@@ -215,7 +215,7 @@ class App{
             <ul id="propertyAllocation" class="propinitial"></ul>
             <ul class="selectlist" id="talentSelectedView"></ul>
             <div class="btn-area">
-                <button id="random" class="mainbtn">随机分配</button>
+                <button id="random" class="mainbtn">别点 点了卡死 可以不全分配</button>
                 <button id="start" class="mainbtn">开始新人生</button>
             </div>
         </div>
@@ -318,10 +318,7 @@ class App{
         propertyPage
             .find('#start')
             .click(()=>{
-                if(total() < this.#totalMax) {
-                    this.hint(`你还有${this.#totalMax-total()}属性点没有分配完`);
-                    return;
-                } else if (total() > this.#totalMax) {
+                 if (total() > this.#totalMax) {
                     this.hint(`你多使用了${total() - this.#totalMax}属性点`);
                     return;
                 }
